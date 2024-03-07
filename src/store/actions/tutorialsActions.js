@@ -234,8 +234,8 @@ export const addNewTutorialStep =
   ({ owner, tutorial_id, title, time, id }) =>
     async (firebase, firestore, dispatch) => {
       try {
+        const userId = firebase.auth().currentUser.uid;
         dispatch({ type: actions.CREATE_TUTORIAL_STEP_START });
-
         await firestore
           .collection("tutorials")
           .doc(tutorial_id)
@@ -255,11 +255,23 @@ export const addNewTutorialStep =
           firestore,
           dispatch
         );
+        try {
+          dispatch({ type: actions.ADD_TUTORIAL_LIKES_START });
+           await firestore
+            .collection("tutorial_likes")
+            .add({uid:userId,tut_id:tutorial_id,value:0})
+            .then(() => {
+              dispatch({ type: actions.ADD_TUTORIAL_LIKES_SUCCESS });
+            });
+        } catch (e) {
+          dispatch({ type: actions.ADD_TUTORIAL_LIKES_FAILED, payload: e.message });
+        }
 
         dispatch({ type: actions.CREATE_TUTORIAL_STEP_SUCCESS });
       } catch (e) {
         console.log("CREATE_TUTORIAL_STEP_FAIL", e.message);
         dispatch({ type: actions.CREATE_TUTORIAL_STEP_FAIL, payload: e.message });
+        getTutorialLikesData()(firebase,firestore,dispatch);
       }
     };
 
@@ -532,4 +544,52 @@ export const setTutorialTheme =
       } catch (e) {
         console.log(e.message);
       }
+<<<<<<< HEAD
+    };
+
+    export const addLikeTutorial = (data) => async (firebase, firestore, dispatch) => {
+      try {
+        dispatch({ type: actions.ADD_TUTORIAL_LIKES_START });
+        const doc_id = await firestore
+          .collection("tutorial_likes")
+          .get()
+          .then((querySnapshot)=>{
+            let _data = "";
+            querySnapshot.docs.map((ele)=>{if(ele.data().uid==data.uid && ele.data().tut_id==data.tut_id){_data=ele.id}})
+            return _data
+          })
+          await firestore
+          .collection("tutorial_likes")
+          .doc(doc_id)
+          .update({
+          value:data.value
+        })
+        .then(() => {
+          dispatch({ type: actions.ADD_TUTORIAL_LIKES_SUCCESS });
+        }); 
+      } catch (error) {
+        dispatch({ type: actions.ADD_TUTORIAL_LIKES_FAILED, payload: error.message });
+      }
+    };
+    
+    export const getTutorialLikesData =
+      () => async (firebase, firestore, dispatch) => {
+      try {
+        dispatch({ type: actions.GET_TUTORIAL_LIKES_START });
+        const data = await firestore
+        .collection("tutorial_likes")
+        .get()
+        .then((querySnapshot)=>{
+          let _data = [];
+          querySnapshot.docs.map((ele)=>_data.push(ele.data()))
+          return _data
+        })
+        const commentLikes = data;
+        dispatch({ type: actions.GET_TUTORIAL_LIKES_SUCCESS, payload: commentLikes });
+        return data;
+      } catch (e) {
+        dispatch({ type: actions.GET_TUTORIAL_LIKES_FAILED });
+      }
+=======
+>>>>>>> b9ce37c54740d96b47952293223792143fcd6a15
     };
