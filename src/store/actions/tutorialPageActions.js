@@ -234,6 +234,7 @@ export const addComment = (comment,id) => async (firebase, firestore, dispatch) 
     dispatch({ type: actions.ADD_COMMENT_FAILED, payload: e.message });
     getCommentLikesData()(firebase, firestore, dispatch);
   }
+<<<<<<< HEAD
 };
 
 export const addLikeComment = data => async (firebase, firestore, dispatch) => {
@@ -291,3 +292,6 @@ export const getCommentLikesData =
       dispatch({ type: actions.GET_COMMENT_DATA_FAIL });
     }
   };
+=======
+};
+>>>>>>> b9ce37c54740d96b47952293223792143fcd6a15

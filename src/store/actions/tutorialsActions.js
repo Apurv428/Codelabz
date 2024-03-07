@@ -544,6 +544,7 @@ export const setTutorialTheme =
       } catch (e) {
         console.log(e.message);
       }
+<<<<<<< HEAD
     };
 
     export const addLikeTutorial = (data) => async (firebase, firestore, dispatch) => {
@@ -589,4 +590,6 @@ export const setTutorialTheme =
       } catch (e) {
         dispatch({ type: actions.GET_TUTORIAL_LIKES_FAILED });
       }
+=======
+>>>>>>> b9ce37c54740d96b47952293223792143fcd6a15
     };
