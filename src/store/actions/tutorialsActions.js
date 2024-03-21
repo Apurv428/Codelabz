@@ -633,13 +633,12 @@ export const setTutorialTheme =
         updatedAt: firestore.FieldValue.serverTimestamp()
       });
 
-      await getCurrentTutorialData(owner, tutorial_id)(
-        firebase,
-        firestore,
-        dispatch
-      );
-    } catch (e) {
-      console.log(e.message);
-    }
-  };
->>>>>>> parent of 3b0952c (Merge pull request #977 from Doraemon012/code_i1)
+        await getCurrentTutorialData(owner, tutorial_id)(
+          firebase,
+          firestore,
+          dispatch
+        );
+      } catch (e) {
+        console.log(e.message);
+      }
+    };
