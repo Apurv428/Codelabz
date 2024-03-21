@@ -192,7 +192,7 @@ export const getCommentReply =
     }
   };
 
-export const addComment = (comment, id) => async (firebase, firestore, dispatch) => {
+export const addComment = (comment,id) => async (firebase, firestore, dispatch) => {
   try {
     const userId = firebase.auth().currentUser.uid;
     dispatch({ type: actions.ADD_COMMENT_START });
@@ -228,13 +228,13 @@ export const addComment = (comment, id) => async (firebase, firestore, dispatch)
       })
       .then(() => {
         dispatch({ type: actions.ADD_COMMENT_SUCCESS });
-        getTutorialData(id)(firebase, firestore, dispatch);
-        getTutorialData(id)(firebase, firestore, dispatch);
+        getTutorialData(id)(firebase,firestore,dispatch);
       });
   } catch (e) {
     dispatch({ type: actions.ADD_COMMENT_FAILED, payload: e.message });
     getCommentLikesData()(firebase, firestore, dispatch);
   }
+<<<<<<< HEAD
 };
 
 export const addLikeComment = data => async (firebase, firestore, dispatch) => {
@@ -291,4 +291,7 @@ export const getCommentLikesData =
     } catch (e) {
       dispatch({ type: actions.GET_COMMENT_DATA_FAIL });
     }
-  }
+  };
+=======
+};
+>>>>>>> b9ce37c54740d96b47952293223792143fcd6a15
